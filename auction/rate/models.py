@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 import datetime
-import django.utils
+import django.utils.timezone
 
 
 class Lot(models.Model):
@@ -15,8 +15,8 @@ class Lot(models.Model):
     name = models.CharField(max_length=200, help_text='Name')
     description = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=(('OPEN', 'open'), ('CANCELED', 'canceled'), ('CLOSED', 'closed')))
-    date_start = models.DateField(default=datetime.datetime.now())
-    date_end = models.DateField(default=datetime.datetime.now())
+    date_start = models.DateField(default=django.utils.timezone.now)
+    date_end = models.DateField(default=django.utils.timezone.now)
 
 
 class Rate(models.Model):
@@ -42,6 +42,6 @@ class WinnerLot(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.ForeignKey(Rate, on_delete=models.CASCADE)
-    date = models.DateField(default=datetime.datetime.now())
+    date = models.DateField(default=django.utils.timezone.now)
 
 
