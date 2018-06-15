@@ -41,7 +41,7 @@ class WinnerLot(models.Model):
 
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # pub_date = models.DateTimeField(auto_now=True)
     price = models.ForeignKey(Rate, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.datetime.now())
 
 
