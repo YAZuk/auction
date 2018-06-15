@@ -28,7 +28,7 @@ class Rate(models.Model):
 
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField(auto_now=True)
+    pub_date = models.DateTimeField(default=django.utils.timezone.now)
     price = models.IntegerField(default=100)
 
 
@@ -39,7 +39,6 @@ class WinnerLot(models.Model):
         verbose_name = "Победитель лота"
         verbose_name_plural = "Победители аукциона"
 
-    # lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.ForeignKey(Rate, on_delete=models.CASCADE)
     date = models.DateField(default=django.utils.timezone.now)
