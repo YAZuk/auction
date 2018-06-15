@@ -19,8 +19,7 @@ class LotActiveList(generics.ListCreateAPIView):
     """
     model = Lot
     serializer_class = LotSerializer
-
-
+    queryset = []
 
 
 
