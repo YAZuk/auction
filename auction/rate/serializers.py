@@ -7,14 +7,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        # fields = ('first_name', 'last_nam', 'email')
+        fields = ('username', )
 
 
 class LotSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Lot
-        fields = ('name', 'description', 'status', 'date_start', 'date_end')
+        # fields = ('name', 'description', 'status', 'date_start', 'date_end')
+        fields = ('name', )
 
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
