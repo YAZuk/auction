@@ -1,5 +1,13 @@
 from rest_framework import serializers
 from .models import Lot, Rate
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'password')
 
 
 class LotSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,10 +19,11 @@ class LotSerializer(serializers.HyperlinkedModelSerializer):
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
     lot = LotSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = Rate
-        fields = ('id', 'lot', 'price', 'pub_date')
+        fields = ('id', 'lot', 'price', 'pub_date', 'user')
 
 
 
