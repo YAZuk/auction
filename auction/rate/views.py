@@ -19,7 +19,7 @@ class LotActiveList(generics.ListCreateAPIView):
     """
     model = Lot
     serializer_class = LotSerializer
-    queryset = []
+    queryset = Lot.objects.filter(status="OPEN")
 
 
 
