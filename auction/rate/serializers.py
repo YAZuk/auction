@@ -7,23 +7,27 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password')
+        fields = ('first_name', 'last_name', 'email')
 
 
 class LotSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Lot
-        fields = ('id', 'name', 'description', 'status', 'date_start', 'date_end')
+        fields = ('name', 'description', 'status', 'date_start', 'date_end')
 
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
-    lot = LotSerializer()
-    user = UserSerializer()
+    lot = LotSerializer(read_only=False)
+    user = UserSerializer(read_only=False)
 
     class Meta:
         model = Rate
-        fields = ('id', 'lot', 'price', 'pub_date', 'user')
+        fields = ('lot', 'user', 'price')
+
+    def create(self, validated_data):
+        print(validated_data)
+        print(User.objects.all())
 
 
 
