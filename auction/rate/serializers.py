@@ -23,11 +23,13 @@ class RateSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Rate
-        fields = ('lot', 'user', 'price')
+        fields = ('user', 'price', 'lot')
 
     def create(self, validated_data):
-        print(validated_data)
         print(User.objects.all())
+        print(validated_data.get('user').get('email'))
+        print(validated_data.get('price'))
+        return validated_data
 
 
 

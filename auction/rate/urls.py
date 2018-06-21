@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('activelots', views.LotActiveList.as_view(), name='lots'),
+    path('activelots', views.LotActiveList.as_view(), name='activelots'),
     path('createrate', views.CreateRate.as_view(), name='createrate'),
 ]
