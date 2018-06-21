@@ -30,7 +30,12 @@ class CreateRate(generics.ListCreateAPIView):
     serializer_class = RateSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        post_request = serializer.save()
+        # users = Rate.user.objects.all()
+        name_lot = post_request.get('lot').get('name')
+        lots = Lot.objects.all().filter(name=name_lot)
+        if len(lots) > 0:
+            print(lots)
 
 
 

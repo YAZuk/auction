@@ -26,9 +26,9 @@ class RateSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('user', 'price', 'lot')
 
     def create(self, validated_data):
-        print(User.objects.all())
-        print(validated_data.get('user').get('email'))
-        print(validated_data.get('price'))
+        # print(User.objects.all())
+        # print(validated_data.get('user').get('email'))
+        # print(validated_data.get('price'))
         return validated_data
 
 
