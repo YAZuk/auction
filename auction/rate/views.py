@@ -4,14 +4,14 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
-from .serializers import LotSerializer
+from .serializers import LotSerializer, RateSerializer
 from .models import Lot, Rate, WinnerLot
 
 # Create your views here.
 
 
 def index(request):
-    return HttpResponse("Index rate")
+    return HttpResponse("Rate")
 
 
 class LotActiveList(generics.ListCreateAPIView):
@@ -21,6 +21,16 @@ class LotActiveList(generics.ListCreateAPIView):
     serializer_class = LotSerializer
     queryset = Lot.objects.filter(status="OPEN")
 
+
+class CreateRate(generics.ListCreateAPIView):
+    """
+    """
+    model = Rate
+    queryset = Rate.objects.all()
+    serializer_class = RateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
 
 
 
