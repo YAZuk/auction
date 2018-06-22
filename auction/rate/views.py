@@ -53,6 +53,9 @@ class CreateRate(generics.ListCreateAPIView):
             if (user_auth != None) and (lot_request != None):
                 print(user_auth, lot_request, price_request)
                 Rate.objects.create(user=user_auth, lot=lot_request, price=price_request)
+            else:
+                Response(data="Error", status=403)
+                print("403")
 
 
 
