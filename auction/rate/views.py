@@ -32,11 +32,27 @@ class CreateRate(generics.ListCreateAPIView):
     serializer_class = RateSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        # serializer.save()
+
+        # если авторизован
         if self.request.user.is_authenticated:
-            # post_request.get('lot').get('name')
-            name_user = User.objects.filter(username=self.request.user)
-            print(name_user, Lot.objects.filter(name=self.request.data['lot.name']), self.request.data['price'])
+            user_auth = None
+            lot_request = None
+
+            # защита 80 левела
+            users = User.objects.filter(username=self.request.user)
+            if len(users) == 1:
+                user_auth = users[0]
+
+            # защита 80 левела
+            lots = Lot.objects.filter(name=self.request.data['lot.name'])
+            if len(lots) == 1:
+                lot_request = lots[0]
+            price_request = self.request.data['price']
+
+            if (user_auth != None) and (lot_request != None):
+                print(user_auth, lot_request, price_request)
+                Rate.objects.create(user=user_auth, lot=lot_request, price=price_request)
 
 
 
