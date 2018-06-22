@@ -21,14 +21,14 @@ class LotSerializer(serializers.HyperlinkedModelSerializer):
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
     lot = LotSerializer(read_only=False)
-    user = UserSerializer(read_only=False)
+    # user = UserSerializer(read_only=False)
 
     class Meta:
         model = Rate
-        fields = ('user', 'price', 'lot')
+        fields = ('lot', 'price',)
 
     def create(self, validated_data):
-        # print(User.objects.all())
+        # rates = Rate.objects.all()
         # print(validated_data.get('user').get('email'))
         # print(validated_data.get('price'))
         return validated_data

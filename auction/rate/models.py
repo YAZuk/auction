@@ -31,6 +31,9 @@ class Rate(models.Model):
     pub_date = models.DateTimeField(default=django.utils.timezone.now)
     price = models.IntegerField(default=100)
 
+    # def __str__(self):
+    #     return lot.name
+
 
 class WinnerLot(models.Model):
 

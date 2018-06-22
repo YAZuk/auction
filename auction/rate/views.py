@@ -11,7 +11,9 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-    return HttpResponse("Rate")
+        latest_rate = Rate.objects.order_by('-pub_date')
+        # output = ', '.join([q.price for q in latest_rate])
+        return HttpResponse(latest_rate)
 
 
 class LotActiveList(generics.ListCreateAPIView):
@@ -30,15 +32,12 @@ class CreateRate(generics.ListCreateAPIView):
     serializer_class = RateSerializer
 
     def perform_create(self, serializer):
-        post_request = serializer.save()
-        users = User.objects.all()
-        name_lot = post_request.get('lot').get('name')
-        name_user = post_request.get('user').get('username')
-        lots = Lot.objects.all().filter(name=name_lot)
-        # users = User.objects.all().filter(username=name_user)
-        print(users)
-        if len(lots) > 0:
-            print(lots)
+        serializer.save()
+        if self.request.user.is_authenticated:
+            # post_request.get('lot').get('name')
+            name_user = User.objects.filter(username=self.request.user)
+            print(name_user, Lot.objects.filter(name=self.request.data['lot.name']), self.request.data['price'])
+
 
 
 
