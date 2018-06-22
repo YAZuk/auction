@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
@@ -30,6 +30,7 @@ class CreateRate(generics.ListCreateAPIView):
     model = Rate
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         # serializer.save()
@@ -56,6 +57,7 @@ class CreateRate(generics.ListCreateAPIView):
             else:
                 Response(data="Error", status=403)
                 print("403")
+
 
 
 

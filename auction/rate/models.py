@@ -15,8 +15,9 @@ class Lot(models.Model):
     name = models.CharField(max_length=200, help_text='Name')
     description = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=(('OPEN', 'open'), ('CANCELED', 'canceled'), ('CLOSED', 'closed')))
-    date_start = models.DateField(default=django.utils.timezone.now)
-    date_end = models.DateField(default=django.utils.timezone.now)
+    date_start = models.DateTimeField(default=django.utils.timezone.now)
+    date_end = models.DateTimeField(default=django.utils.timezone.now)
+    pub_date = models.DateTimeField(default=django.utils.timezone.now)
 
 
 class Rate(models.Model):
@@ -44,6 +45,6 @@ class WinnerLot(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.ForeignKey(Rate, on_delete=models.CASCADE)
-    date = models.DateField(default=django.utils.timezone.now)
+    date = models.DateTimeField(default=django.utils.timezone.now)
 
 
