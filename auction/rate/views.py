@@ -43,3 +43,4 @@ class CreateRate(generics.ListCreateAPIView):
         print(len(user_auth), len(lot_request))
         if( (len(user_auth)==1) and (len(lot_request)==1)):
             Rate.objects.create(user=user_auth[0], lot=lot_request[0], price=price_request)
+            # serializer.save(user=user_auth[0], lot=lot_request[0], price=price_request)
