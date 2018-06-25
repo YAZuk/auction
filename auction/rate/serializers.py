@@ -30,9 +30,6 @@ class RateSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('lot', 'price', )
 
     def create(self, validated_data):
-        # rates = Rate.objects.all()
-        # print(validated_data.get('user').get('email'))
-        # print(validated_data.get('price'))
         return validated_data
 
 
