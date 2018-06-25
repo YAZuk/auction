@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Lot, Rate
 from django.contrib.auth.models import User
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,18 +23,17 @@ class LotSerializer(serializers.HyperlinkedModelSerializer):
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
     lot = LotSerializer(read_only=False)
-    # user = UserSerializer(read_only=False)
+    # user = UserSerializer(required=False)
 
     class Meta:
         model = Rate
-        fields = ('lot', 'price',)
+        fields = ('lot', 'price', )
 
     def create(self, validated_data):
         # rates = Rate.objects.all()
         # print(validated_data.get('user').get('email'))
         # print(validated_data.get('price'))
         return validated_data
-
 
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from .serializers import LotSerializer, RateSerializer
 from .models import Lot, Rate, WinnerLot
 from django.contrib.auth.models import User
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 # Create your views here.
 
 
@@ -35,28 +37,26 @@ class CreateRate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         # serializer.save()
 
-        # если авторизован
-        if self.request.user.is_authenticated:
-            user_auth = None
-            lot_request = None
+        user_auth = None
+        lot_request = None
 
-            # защита 80 левела
-            users = User.objects.filter(username=self.request.user)
-            if len(users) == 1:
-                user_auth = users[0]
+        # защита 80 левела
+        users = User.objects.filter(username=self.request.user)
+        if len(users) == 1:
+            user_auth = users[0]
 
-            # защита 80 левела
-            lots = Lot.objects.filter(name=self.request.data['lot.name'])
-            if len(lots) == 1:
-                lot_request = lots[0]
-            price_request = self.request.data['price']
+        # защита 80 левела
+        lots = Lot.objects.filter(name=self.request.data['lot.name'])
+        if len(lots) == 1:
+            lot_request = lots[0]
+        price_request = self.request.data['price']
 
-            if (user_auth != None) and (lot_request != None):
-                print(user_auth, lot_request, price_request)
-                Rate.objects.create(user=user_auth, lot=lot_request, price=price_request)
-            else:
-                Response(data="Error", status=403)
-                print("403")
+        if (user_auth != None) and (lot_request != None):
+            print(user_auth, lot_request, price_request)
+            Rate.objects.create(user=user_auth, lot=lot_request, price=price_request)
+            # return JsonResponse(serializer.data, status=201)
+        else:
+            return JsonResponse(serializer.errors, status=400)
 
 
 
