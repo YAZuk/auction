@@ -13,6 +13,13 @@ from rest_framework.parsers import JSONParser
 
 
 def index(request):
+        """
+        :param request:
+        :return:
+        """
+        # model = Rate
+        # queryset = Rate.objects.all()
+
         latest_rate = Rate.objects.order_by('-pub_date')
         return HttpResponse(latest_rate)
 
@@ -36,8 +43,10 @@ class CreateRate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid:
-            print(dir(serializer))
             lot_request = Lot.objects.filter(name=self.request.data['lot.name'])
             price_request = self.request.data['price']
             if len(lot_request) == 1:
                 serializer.save(user=self.request.user, lot=lot_request[0], price=price_request)
+
+    def get_queryset(self):
+        return Rate.objects.filter(user=self.request.user)
