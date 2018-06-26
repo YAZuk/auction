@@ -14,7 +14,6 @@ from rest_framework.parsers import JSONParser
 
 def index(request):
         latest_rate = Rate.objects.order_by('-pub_date')
-        # output = ', '.join([q.price for q in latest_rate])
         return HttpResponse(latest_rate)
 
 
@@ -25,6 +24,7 @@ class LotActiveList(generics.ListCreateAPIView):
     serializer_class = LotSerializer
     queryset = Lot.objects.filter(status="OPEN")
     permission_classes = [permissions.IsAuthenticated]
+
 
 class CreateRate(generics.ListCreateAPIView):
     """
